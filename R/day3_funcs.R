@@ -18,7 +18,6 @@ pr_chr <- function(char, num){
 }
 
 aoc_day3_generate_selector_matrix <- function(planned_width, planned_length, delta_x, delta_y){
-        standard_tick_multiplier <- floor((planned_width-1)/delta_x)
         standard_tick_length <- (planned_width * delta_y) + (delta_x - 1)
         wrapping_tick_length <- (planned_width * (delta_y-1)) + (delta_x - 1)
 
@@ -39,24 +38,10 @@ aoc_day3_generate_selector_matrix <- function(planned_width, planned_length, del
                 }
         }
 
-        vector_selector <- vect
-
-        vector_selector_length <- length(vector_selector)
-
         total_elements <- planned_length * planned_width
-        if(vector_selector_length>total_elements){
-                output_vector <- vector_selector[1:total_elements]
-
-        } else {
-                output_vector <- rep(
-                        vector_selector
-                        , ceiling(total_elements/vector_selector_length)
-                )[1:total_elements]
-        }
-
-        matrix(output_vector, ncol = planned_width, byrow = T)
+        
+        matrix(vect[1:total_elements], ncol = planned_width, byrow = T)
 }
-
 
 
 jump_vector <- function(input_vect, null_input, jump_vect, width){
