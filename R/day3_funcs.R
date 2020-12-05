@@ -17,6 +17,21 @@ pr_chr <- function(char, num){
         paste0(rep(char, num), collapse = "")
 }
 
+check_vs_spec <- function(hash_map, delta_x, delta_y){
+
+        test_mat <- aoc_day3_generate_selector_matrix(
+                planned_width = dim(hash_map)[2]
+                , planned_length = dim(hash_map)[1]
+                , delta_x = delta_x
+                , delta_y = delta_y
+        )
+        test_mat_int <- 1*(test_mat == "#")
+        parsed_test_int <- 1*(parsed_test == "#")
+
+        sum(test_mat_int * parsed_test_int)
+
+}
+
 aoc_day3_generate_selector_matrix <- function(planned_width, planned_length, delta_x, delta_y){
         standard_tick_length <- (planned_width * delta_y) + (delta_x - 1)
         wrapping_tick_length <- (planned_width * (delta_y-1)) + (delta_x - 1)
@@ -39,7 +54,7 @@ aoc_day3_generate_selector_matrix <- function(planned_width, planned_length, del
         }
 
         total_elements <- planned_length * planned_width
-        
+
         matrix(vect[1:total_elements], ncol = planned_width, byrow = T)
 }
 

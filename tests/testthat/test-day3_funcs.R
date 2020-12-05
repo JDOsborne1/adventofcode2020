@@ -15,5 +15,16 @@ test_that("multiplication works", {
                 tempfil
                 , col_names = FALSE
         )
+
+
+        angle_list <- list(
+                c(1, 1)
+                , c(3 , 1)
+                , c(5 , 1)
+                , c(7 , 1)
+                , c(1 , 2)
+        )
+        list_of_collisions <- map(angle_list, function(x) check_vs_spec(parsed_test, x[1], x[2]))  %>%
+                as.numeric()
   expect_equal(2 * 2, 4)
 })
