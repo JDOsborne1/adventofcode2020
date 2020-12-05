@@ -52,56 +52,15 @@ test_result
 aoc_day2_count_legal_passwords_v2(day_2_formatted)
 
 day_3_formatted <- readr::melt_tsv(
-        #"/Users/user/Documents/adventofcode2020/inst/intdata/day4_input.txt"
-        tempfil
+        "/Users/user/Documents/adventofcode2020/inst/intdata/day4_input.txt"
+        #tempfil
         #, col_names = FALSE
 )
 
-parsed_lines <- day_3_formatted  %>%
-        mutate(
-                double_new = data_type == "missing"
-                , row = cumsum(double_new)
-        )  %>%
-        filter(data_type != "missing")  %>%
-        group_by(row)  %>%
-        summarise(all_value = paste0(value, collapse = " "))
-
-test_list <- parsed_lines  %>%
-        mutate(all_value = map_chr(all_value, .f = str_replace_all, " ", "\n")) %>%
-        mutate(all_value = map(all_value, .f = readr::read_delim, delim = ":", col_names = FALSE))
-
-passport_values <- c(
-        "byr"
-        , "iyr"
-        , "eyr"
-        , "hgt"
-        , "hcl"
-        , "ecl"
-        , "pid"
-        #, "cid"
-)
-
-
-
-test_list  %>%
-        mutate(is_valid = map(all_value, aoc_day4_test_passport_data)  %>%
-        count(is_valid)
-
-wide_list <- test_list  %>%
-        tidyr::unnest(cols = all_value)  %>%
-        tidyr::pivot_wider(id_cols = row, names_from = X1, values_from = X2, values_fill = NA)
-
-
-
-verified_list <- wide_list  %>%
-        select(-cid)  %>%
-        #head()  %>%
-        aoc_day4_apply_tests()  %>%
-        pivot_longer(cols = -row, values_to = "pass_status", names_to = "criteria")  %>%
-        mutate_at(vars(pass_status), as.logical)  %>%
-        group_by(row)  %>%
-        summarise(pass_test = all(pass_status))
-
+parsed_passports <- day_3_formatted  %>%
+        aoc_day4_parse_input()
+verified_list <- parsed_passports  %>%
+        aoc_day4_verify_passports()
 verified_list  %>% count(pass_test)
 
 # create example body

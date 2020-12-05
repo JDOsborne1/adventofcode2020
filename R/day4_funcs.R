@@ -1,3 +1,31 @@
+aoc_day4_parse_input <- function(input_data){
+        input_data  %>%
+                dplyr::mutate(
+                        double_new = data_type == "missing"
+                        , row = cumsum(double_new)
+                )  %>%
+                dplyr::filter(data_type != "missing")  %>%
+                dplyr::group_by(row)  %>%
+                dplyr::summarise(all_value = paste0(value, collapse = " ")) %>%
+                dplyr::mutate(all_value = purrr::map_chr(all_value, .f = stringr::str_replace_all, " ", "\n")) %>%
+                dplyr::mutate(all_value = purrr::map(all_value, .f = readr::read_delim, delim = ":", col_names = FALSE))  %>%
+                tidyr::unnest(cols = all_value)  %>%
+                tidyr::pivot_wider(id_cols = row, names_from = X1, values_from = X2, values_fill = NA)
+}
+
+
+aoc_day4_verify_passports <- function(input_data){
+        input_data  %>%
+                select(-cid)  %>%
+                #head()  %>%
+                aoc_day4_apply_tests()  %>%
+                pivot_longer(cols = -row, values_to = "pass_status", names_to = "criteria")  %>%
+                mutate_at(vars(pass_status), as.logical)  %>%
+                group_by(row)  %>%
+                summarise(pass_test = all(pass_status))
+}
+
+
 aoc_day4_test_passport_data <- function(input_data, passport_values){
         col_existance <- all(passport_values %in% input_data$X1)
 
