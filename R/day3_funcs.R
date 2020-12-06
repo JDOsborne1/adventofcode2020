@@ -1,4 +1,4 @@
-test_in
+
 aoc_day3_parse_input <- function(input_data){
         map_width <- input_data  %>% head(1)  %>% pull(X1)  %>% stringr::str_length()
         input_data  %>%
@@ -6,10 +6,10 @@ aoc_day3_parse_input <- function(input_data){
                 select(-`0`)  %>%
                 as.matrix()
 }
-parsed_test <- test_in  %>% aoc_day3_parse_input()
+#parsed_test <- test_in  %>% aoc_day3_parse_input()
 
-map_length <- nrow(parsed_test)
-map_width <- ncol(parsed_test)
+#map_length <- nrow(parsed_test)
+#map_width <- ncol(parsed_test)
 
 gradient <- c(1,3)
 
@@ -85,7 +85,7 @@ test_mat <- aoc_day3_generate_selector_matrix(
         , delta_x = 3
         , delta_y = 1
 )
-test_mat_int <- 1*(test_mat == "#")
-parsed_test_int <- 1*(parsed_test == "#")
+#test_mat_int <- 1*(test_mat == "#")
+#parsed_test_int <- 1*(parsed_test == "#")
 
-sum(test_mat_int * parsed_test_int)
+#sum(test_mat_int * parsed_test_int)
