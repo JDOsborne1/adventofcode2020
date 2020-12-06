@@ -22,15 +22,8 @@ day_5_formatted <- readr::read_table(
         "/Users/user/Documents/adventofcode2020/inst/intdata/day5_input.txt"
 
         , col_names = FALSE
-)  %>% aoc_day5_parse_input()
+)
 
-day5_output <- day_5_formatted  %>%
-        mutate(position_out = map(as.character(pass_code), aoc_day5_parse_pass_code, vert_cols = 0:127, horiz_rows = 0:7))  %>%
-        unnest_wider(position_out)  %>%
-        mutate(seat_id = (row*8) + col)
-
-
-day5_output  %>% summarise(max_seat = max(seat_id))
 # create example body
 body <- list(
   #msg = "Testing Testing 123"

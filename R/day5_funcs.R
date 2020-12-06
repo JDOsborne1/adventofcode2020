@@ -27,3 +27,20 @@ aoc_day5_split_vector <- function(input_vector, switch_arg){
                 input_vector[input_vector < median_loc]
         }
 }
+
+
+aoc_day5_perform_test <- function(){
+
+        day5_output <- day_5_formatted  %>%
+        mutate(position_out = map(as.character(pass_code), aoc_day5_parse_pass_code, vert_cols = 0:127, horiz_rows = 0:7))  %>%
+        unnest_wider(position_out)  %>%
+        mutate(seat_id = (row*8) + col)
+
+
+        day5_output  %>% summarise(max_seat = max(seat_id), min_seat = min(seat_id))
+
+        day5_output  %>%
+        arrange(seat_id)  %>%
+        mutate(index = 70:825)  %>%
+        mutate(diff_flag = index != seat_id)
+}
