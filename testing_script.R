@@ -8,12 +8,7 @@ options(stringsAsFactors = FALSE)
 # url for local testing
 url <- "http://127.0.0.1:8000"
 
-# read example stock data
-.data <- datasets::mtcars
 
-day_1_formatted <- system.file("intdata", "day1_input.txt", package = "adventofcode2020")  %>%
-readr::read_csv(col_names = c("test"))  %>%
-pull(test)
 library(adventofcode2020)
 
 
