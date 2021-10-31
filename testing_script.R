@@ -11,8 +11,27 @@ url <- "http://127.0.0.1:8000"
 
 library(adventofcode2020)
 
+day_8_input <- readr::read_delim(
+        "/Users/user/Documents/adventofcode2020/inst/intdata/day8_input.txt"
+        , col_names = FALSE
+        , delim = " "
+)
+day_8_input[1,]
+index2 <- 1
+global_store2 <- 0
+history2 <- list()
+for (i in 1:nrow(day_8_input)){
+        print(c(day_8_input[index2,]$X1, day_8_input[index2,]$X2))
+        aoc_day8_dispatch_func(
+                fun = day_8_input[index2,]$X1
+                , arg = day_8_input[index2,]$X2
+                , index = "index2"
+                , global_store = "global_store2"
+                , history = "history2"
+        )
+}
 
-
+global_store2
 
 # create example body
 body <- list(
